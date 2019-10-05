@@ -1,5 +1,15 @@
 -- Performance tests for point data and indexes
 
+-- Test Results:
+
+-- ====  XY representation
+-- No index: 184 ms
+-- Index: 4.65 ms
+
+-- ==== Postgres point representation
+-- No index: 110 ms
+-- Index: 1.2 - 2.4 ms
+
 CREATE SCHEMA ptsperf;
 
 -- ================================================
@@ -20,11 +30,7 @@ INSERT INTO ptsperf.pts_xy
 
 SELECT count(*) FROM ptsperf.pts_xy 
   WHERE locx BETWEEN 50 AND 51 AND locy BETWEEN 60 AND 61;
-  
--- Test Results:
--- No index: 184 ms
--- Index: 4.65 ms
-  
+
 -- ================================================
 -- Representation: Postgres point, with GIST index
 -- ================================================
@@ -45,9 +51,6 @@ INSERT INTO ptsperf.pts_point
 SELECT count(*) FROM pts.pts_point 
   WHERE loc <@ box '((50,60),(51,61))';
 
--- Test Results:
--- No index: 110 ms
--- Index: 1.2 - 2.4 ms
 
 -- ===================================
 -- Cleanup

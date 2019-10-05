@@ -8,7 +8,7 @@
 -- Index (Btree): 23.9 ms
 
 -- ==== Postgres point representation
--- No index: 110 ms
+-- No index: 1017 ms
 -- Index (GIST): 1.2 - 2.4 ms
 
 CREATE SCHEMA ptsperf;
@@ -42,14 +42,12 @@ CREATE TABLE ptsperf.pts_point
 
 CREATE INDEX ON ptsperf.pts_point USING gist( loc );
 
-DELETE FROM pts.pts_point;
-
 -- Insert records with locations as point datatype 
 INSERT INTO ptsperf.pts_point 
   SELECT point('(' || locx || ',' || locy || ')') AS loc
     FROM ptsperf.pts_xy;
 
-SELECT count(*) FROM pts.pts_point 
+SELECT count(*) FROM ptsperf.pts_point 
   WHERE loc <@ box '((50,60),(51,61))';
 
 

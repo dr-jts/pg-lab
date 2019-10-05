@@ -6,6 +6,7 @@
 -- ====  XY representation
 -- No index: 1165 ms
 -- Index (Btree): 23.9 ms
+-- Index creation time: 19158 ms
 
 -- ==== Postgres point representation
 -- No index: 1017 ms

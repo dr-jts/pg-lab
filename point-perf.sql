@@ -10,7 +10,8 @@
 
 -- ==== Postgres point representation
 -- No index: 1017 ms
--- Index (GIST): 1.2 - 2.4 ms
+-- Index (GIST): 4.8 ms
+-- Index creation time: 918975 ms
 
 CREATE SCHEMA ptsperf;
 

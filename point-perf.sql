@@ -1,14 +1,15 @@
 -- Performance tests for point data and indexes
 
 -- Test Results:
+-- 10M points
 
 -- ====  XY representation
--- No index: 184 ms
--- Index: 4.65 ms
+-- No index: 1165 ms
+-- Index (Btree): 23.9 ms
 
 -- ==== Postgres point representation
 -- No index: 110 ms
--- Index: 1.2 - 2.4 ms
+-- Index (GIST): 1.2 - 2.4 ms
 
 CREATE SCHEMA ptsperf;
 

@@ -2,4 +2,11 @@
 
 CREATE SCHEMA pts;
 
-CREAT TABLE pts.pts_xy
+CREATE TABLE pts.pts_xy
+(
+  locx double precision,
+  locy double precision
+);
+
+
+

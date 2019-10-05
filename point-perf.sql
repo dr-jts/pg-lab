@@ -13,6 +13,11 @@
 -- Index (GIST): 4.8 ms
 -- Index creation time: 918975 ms
 
+-- ==== Postgres point representation
+-- No index: 2555 ms
+-- Index (GIST): 4.8 ms
+-- Index creation time: 918975 ms
+
 CREATE SCHEMA ptsperf;
 
 -- ================================================
@@ -67,8 +72,8 @@ INSERT INTO ptsperf.pts_geom
   SELECT ST_MakePoint(locx, locy) AS loc
     FROM ptsperf.pts_xy;
 
-SELECT count(*) FROM ptsperf.pts_geom 
-  WHERE loc <@ box '((50,60),(51,61))';
+SELECT count(*) FROM ptsperf.pts_geom  
+  WHERE loc && ST_MakeBox2D( ST_Point(50,60),ST_Point(51,61) );
 
 
 -- ===================================

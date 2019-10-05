@@ -52,6 +52,24 @@ INSERT INTO ptsperf.pts_point
 SELECT count(*) FROM ptsperf.pts_point 
   WHERE loc <@ box '((50,60),(51,61))';
 
+-- ================================================
+-- Representation: PostGIS point geometry, with GIST index
+-- ================================================
+CREATE TABLE ptsperf.pts_geom
+(
+  loc geometry
+);
+
+CREATE INDEX ON ptsperf.pts_geom USING gist( loc );
+
+-- Insert records with locations as point datatype 
+INSERT INTO ptsperf.pts_geom 
+  SELECT ST_MakePoint(locx, locy) AS loc
+    FROM ptsperf.pts_xy;
+
+SELECT count(*) FROM ptsperf.pts_geom 
+  WHERE loc <@ box '((50,60),(51,61))';
+
 
 -- ===================================
 -- Cleanup

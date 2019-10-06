@@ -47,12 +47,15 @@ CREATE TABLE ptsperf.pts_point
   loc point
 );
 
-CREATE INDEX ON ptsperf.pts_point USING gist( loc );
-
 -- Insert records with locations as point datatype 
 INSERT INTO ptsperf.pts_point 
   SELECT point('(' || locx || ',' || locy || ')') AS loc
     FROM ptsperf.pts_xy;
+    
+CREATE INDEX ON ptsperf.pts_point USING gist( loc );
+DROP INDEX ptsperf.pts_point_loc_idx;
+
+CREATE INDEX ON ptsperf.pts_point USING spgist( loc );
 
 SELECT count(*) FROM ptsperf.pts_point 
   WHERE loc <@ box '((50,60),(51,61))';

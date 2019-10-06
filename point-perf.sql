@@ -4,18 +4,20 @@
 -- 10M points
 
 -- ====  XY representation
--- No index: 1165 ms
--- Index (Btree): 23.9 ms
+-- Query - No index: 1165 ms
+-- Query - Index (Btree): 23.9 ms
 -- Index creation time: 19158 ms
 
 -- ==== Postgres point representation
--- No index: 1017 ms
--- Index (GIST): 4.8 ms
+-- Query - No index: 1017 ms
+-- Query - Index (GIST): 4.8 ms
+-- Index creation time: 918975 ms
+-- Query - Index (SPGIST): ~ 7 ms
 -- Index creation time: 918975 ms
 
 -- ==== Postgres point representation
--- No index: 2555 ms
--- Index (GIST): 5.5 ms
+-- Query - No index: 2555 ms
+-- Query - Index (GIST): 5.5 ms
 -- Index creation time: 1176434 ms
 
 CREATE SCHEMA ptsperf;
@@ -39,6 +41,9 @@ INSERT INTO ptsperf.pts_xy
 SELECT count(*) FROM ptsperf.pts_xy 
   WHERE locx BETWEEN 50 AND 51 AND locy BETWEEN 60 AND 61;
 
+SELECT avg(locx), avg(locy) FROM ptsperf.pts_xy 
+  WHERE locx BETWEEN 50 AND 51 AND locy BETWEEN 60 AND 61;
+  
 -- ================================================
 -- Representation: Postgres point, with GIST index
 -- ================================================
@@ -58,6 +63,9 @@ DROP INDEX ptsperf.pts_point_loc_idx;
 CREATE INDEX ON ptsperf.pts_point USING spgist( loc );
 
 SELECT count(*) FROM ptsperf.pts_point 
+  WHERE loc <@ box '((50,60),(51,61))';
+  
+SELECT avg(loc[0]), avg(loc[1]) FROM ptsperf.pts_point 
   WHERE loc <@ box '((50,60),(51,61))';
 
 -- ================================================

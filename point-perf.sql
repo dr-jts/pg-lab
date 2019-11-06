@@ -15,7 +15,7 @@
 -- Query - Index (SPGIST): ~ 7 ms
 -- Index creation time: 918975 ms
 
--- ==== Postgres point representation
+-- ==== PostGIS point representation
 -- Query - No index: 2555 ms
 -- Query - Index (GIST): 5.5 ms
 -- Index creation time: 1176434 ms
@@ -45,7 +45,7 @@ SELECT avg(locx), avg(locy) FROM ptsperf.pts_xy
   WHERE locx BETWEEN 50 AND 51 AND locy BETWEEN 60 AND 61;
   
 -- ================================================
--- Representation: Postgres point, with GIST index
+-- Representation: Postgres point, with GIST and SPGIST index
 -- ================================================
 CREATE TABLE ptsperf.pts_point
 (
